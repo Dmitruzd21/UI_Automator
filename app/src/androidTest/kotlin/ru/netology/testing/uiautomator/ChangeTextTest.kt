@@ -53,7 +53,7 @@ class ChangeTextTest {
 //        device.pressHome()
 //
 //        // Wait for launcher
-//        val launcherPackage = device.launcherPackageName
+//        val launcherPackage devi =ce.launcherPackageName
 //        device.wait(Until.hasObject(By.pkg(launcherPackage)), TIMEOUT)
 //        waitForPackage(SETTINGS_PACKAGE)
 //
@@ -107,6 +107,30 @@ class ChangeTextTest {
         device.findObject(By.res(packageName, "buttonChange")).click()
 
         val result = device.findObject(By.res(packageName, "textToBeChanged")).text
+        assertEquals(result, textToSet)
+    }
+
+    @Test
+    fun testEmptyInput() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        device.findObject(By.res(packageName,"userInput")).text = " "
+        device.findObject(By.res(packageName, "buttonChange")).click()
+
+        val result = device.findObject(By.res(packageName,"textToBeChanged")).text
+        assertEquals(result,"Hello UiAutomator!")
+    }
+
+    @Test
+    fun testTextInTheOtherActivity() {
+        val packageName = MODEL_PACKAGE
+        waitForPackage(packageName)
+
+        device.findObject(By.res(packageName, "userInput")).text = textToSet
+        device.findObject(By.res(packageName, "buttonActivity")).click()
+
+        val result = device.findObject(By.res(packageName, "text")).text
         assertEquals(result, textToSet)
     }
 
